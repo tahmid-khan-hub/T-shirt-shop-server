@@ -37,7 +37,18 @@ async function run() {
 
 
     // operations ->
-    
+    app.get('/tshirts', async(req, res) =>{
+      const result = await tshirtCollection.find().toArray();
+      console.log(result);
+      res.send(result);
+    })
+
+
+    app.post('/tshirts', async(req, res) =>{
+      const newTshirt = req.body;
+      const result = await tshirtCollection.insertOne(newTshirt);
+      res.send(result);
+    })
 
 
 
