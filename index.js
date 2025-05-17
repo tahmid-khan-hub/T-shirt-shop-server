@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require ('cors');
 require('dotenv').config();
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -50,6 +50,18 @@ async function run() {
       res.send(result);
     })
 
+
+    app.put('/tshirts/:id', async(req, res) =>{
+      const id = req.params.id;
+      const filter = {_id: new ObjectId(id)};
+      const updatedTshirt = req.body;
+      const updatedDoc = {
+        $set: updatedTshirt
+      }
+
+      const result = await tshirtCollection.updateOne(filter, updatedDoc);
+      res.send(result);
+    })
 
 
 
