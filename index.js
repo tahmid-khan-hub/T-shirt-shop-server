@@ -34,6 +34,7 @@ async function run() {
     // DB Operations
 
     const tshirtCollection = client.db('tshirtDB').collection('tshirts')
+    const userCollection = client.db('tshirtDB').collection('users')
 
 
     // operations ->
@@ -70,6 +71,23 @@ async function run() {
       const result = await tshirtCollection.deleteOne(query);
       res.send(result);
     })
+
+
+
+
+    // users
+    app.get('/users', async(req, res) =>{
+      const result = await userCollection.find().toArray();
+      res.send(result);
+    })
+
+
+    app.post('/users', async(req, res) =>{
+      const newUser = req.body;
+      const result = await userCollection.insertOne(newUser);
+      res.send(result);
+    })
+
 
 
 
